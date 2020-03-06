@@ -18,15 +18,13 @@ class KeySerializer(serializers.ModelSerializer):
         read_only_fields = ['hash_key']
 
     def create(self, validated_data):
-        print(validated_data)
-        # key = KeyGenerator('test@example.com')
-        # print(key.generate())
         account_data = validated_data.pop('account')
         key_gen = KeyGenerator(account_data.get('email'))
         if key_gen:
             generated_key = key_gen.generate()
-            account = Account.objects.create(**account_data)
-            # validated_data['hash_key'] = generated_key
+            account = Account.objects.get(email=account_data.get('email'))
+            if not account:
+                account = Account.objects.create(**account_data)
             key = Key.objects.create(account=account, hash_key=generated_key, **validated_data)
             return key
         return False
