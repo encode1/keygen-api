@@ -8,6 +8,14 @@ class Account(models.Model):
         return self.email
 
 
+class UnDeletedKeyManager(models.Manager):
+    # key manager to return keys not deleted
+
+    def get_queryset(self):
+        """ Returns queryset of keys not deleted"""
+        return super(UnDeletedKeyManager, self).get_queryset().filter(deleted__exact=False)
+
+
 class Key(models.Model):
     STATE = (
         (0, 'Inactive'),
@@ -20,7 +28,10 @@ class Key(models.Model):
     account = models.ForeignKey(Account, null=False, blank=False,
                                 on_delete=models.CASCADE)
 
+    objects = UnDeletedKeyManager()
+
     def __str__(self):
         return self.hash_key
+    
 
 
