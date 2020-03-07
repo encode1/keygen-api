@@ -14,8 +14,8 @@ class KeySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Key
-        fields = ('account', 'hash_key', 'created')
-        read_only_fields = ['hash_key']
+        fields = ('id', 'account', 'hash_key', 'created')
+        read_only_fields = ['id', 'hash_key']
 
     def create(self, validated_data):
         account_data = validated_data.pop('account')
