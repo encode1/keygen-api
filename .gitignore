@@ -27,6 +27,7 @@ wheels/
 
 # Local files
 db.sqlite3
+local.py
 
 # Unit test / coverage reports
 htmlcov/
