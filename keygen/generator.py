@@ -48,7 +48,7 @@ class KeyGenerator(object):
             if len(chunk) != 4:
                 return False
             score += self._calculate_score(chunk)
-        if score == self.email_score:
+        if score == 1772:
             return True
         return False
 
