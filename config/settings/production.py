@@ -4,4 +4,4 @@ from .base import *
 print('In production')
 
 ALLOWED_HOSTS = ['*']
-DEBUG = False
+DEBUG = True
