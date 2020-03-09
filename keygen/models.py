@@ -27,11 +27,13 @@ class Key(models.Model):
     state = models.IntegerField(default=0, choices=STATE)
     account = models.ForeignKey(Account, null=False, blank=False,
                                 on_delete=models.CASCADE)
-
     objects = UnDeletedKeyManager()
+
+    class Meta:
+        ordering = ["-created"]
 
     def __str__(self):
         return self.hash_key
-    
+
 
 

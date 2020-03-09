@@ -23,6 +23,9 @@ class KeySerializer(serializers.ModelSerializer):
         if key_gen:
             generated_key = key_gen.generate()
             account = Account.objects.get_or_create(email=account_data.get('email'))
-            key = Key.objects.create(account=account[0], hash_key=generated_key, **validated_data)
+            if account[1]:
+                key = Key.objects.create(account=account[0], hash_key=generated_key, **validated_data)
+            else:
+                key = Key.objects.get(account=account[0])
             return key
         return False
