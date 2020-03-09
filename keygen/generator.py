@@ -34,11 +34,25 @@ class KeyGenerator(object):
         if not self._validate_email():
             return False
 
+        key = ''
+        chunk = ''
+        seq = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
         signature = rsa.sign(self.email.encode('utf-8'), self._privkey, 'SHA-1')
-        key = b64encode(signature).decode('ascii')
+        seed = b64encode(signature).decode('ascii')
+        for char in seed:
+            if char not in seq:
+                continue
+            key += char
+            chunk += char
+            if len(chunk) == 4:
+                key += '-'
+                chunk = ''
+            if len(key) == 25:
+                key = key[:-1]
+                break
         return key
 
-    def validate(self, key):
+    def validate(self, key):                    # Todo Needs to be refactored
         if not self._validate_email():
             return False
         signature = b64decode(key)
