@@ -24,3 +24,14 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+
+# Local files
+db.sqlite3
+local.py
+
+# Unit test / coverage reports
+htmlcov/
+.coverage
+
+# IDE files
+.idea
