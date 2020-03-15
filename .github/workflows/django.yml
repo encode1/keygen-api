@@ -14,6 +14,17 @@ jobs:
       max-parallel: 4
       matrix:
         python-version: [3.6]
+    services:
+      postgres:
+        image: postgres
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_DB: pytest_db
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 3
 
     steps:
     - uses: actions/checkout@v2
@@ -29,5 +40,4 @@ jobs:
       run: |
         export PUB_KEY='gANjcnNhLmtleQpQdWJsaWNLZXkKcQApgXEBikGn1ImPuxj+LaOqxFmm507fRAbAbE0QetpQPDvSeuLcWJfYLcDl0mX5IhofdhITTPE4L5Cy+kK6fk9ARDDbr/OJAEoBAAEAhnECYi4='
         export PRIV_KEY='gANjcnNhLmtleQpQcml2YXRlS2V5CnEAKYFxASiKQafUiY+7GP4to6rEWabnTt9EBsBsTRB62lA8O9J64txYl9gtwOXSZfkiGh92EhNM8TgvkLL6Qrp+T0BEMNuv84kASgEAAQCKQHEfH55nKlzw6ZiYWbxi2VzJ5HPNd4fpbJ3sqSnUvdJxiixCbkvdzbKxLwpBrw5SSIWVrAj47KH/wWWyczJNwViKI4/HCfVtc8/iANY9VZlLcYjjdGF6kVzQfCLoKPkfeySEef8Aih9p1TM26mYO36BRkdpO5DZKfvcu6BWW07Lkr01OPIoAiiMPCJYl2cwySEXSF9MXipUhvmqj+q9lT5NwNMzzZnlkpEvdAIoe6RZGaHFOf15/3+O9j7aP5GjUfZt08R9x5eHIfRpniiJhqYKGWS50nP2njG1AQXsUmLsz4rhLhr+R3h39HC5YqQpwdHECYi4='
-        printenv
         python manage.py test
